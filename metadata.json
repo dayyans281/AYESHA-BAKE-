@@ -1,0 +1,6 @@
+{
+  "name": "AYESHA BAKE",
+  "description": "Baked with Love, Made for You. Premium cakes, custom celebration designs, pastries, cupcakes, and desserts baked fresh with love.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
