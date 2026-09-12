@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Plus, Check, MessageCircle, Star, Sparkles, SlidersHorizontal, Eye, FileText, ArrowRight } from 'lucide-react';
 import { MENU_ITEMS, createWhatsAppUrl } from '../data/bakeryData';
 import { MenuItem } from '../types';
 import { OfficialPriceListModal } from './OfficialPriceListModal';
+import { ScrollReveal } from './ScrollReveal';
 
 // Thumbnails for the rate card banner
 import redVelvetCakeImg from '../assets/images/red_velvet_cake_1789206690900.jpg';
@@ -57,7 +58,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto">
+        <ScrollReveal direction="up" distance={28} className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FCE7F3] text-[#BE185D] text-xs font-bold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             Official Menu & Ordering
@@ -68,15 +69,15 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
           <p className="mt-3 text-sm sm:text-base text-[#5D4037] leading-relaxed">
             Choose your favorites, personalize flavors, pounds, sweetness level, and complimentary piped celebration messages.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Category Tabs */}
-        <div className="mt-10 flex items-center justify-center flex-wrap gap-2 sm:gap-3">
+        <ScrollReveal direction="up" delay={0.1} distance={20} className="mt-10 flex items-center justify-center flex-wrap gap-2 sm:gap-3">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 activeCategory === cat.id
                   ? 'bg-[#BE185D] text-white shadow-md shadow-pink-600/25 scale-102'
                   : 'bg-white text-[#5D4037] hover:bg-[#FCE7F3] hover:text-[#BE185D] border border-[#EFE3DB]'
@@ -85,10 +86,10 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
               {cat.label}
             </button>
           ))}
-        </div>
+        </ScrollReveal>
 
         {/* Official Price List Poster Callout Banner */}
-        <div className="mt-8 max-w-4xl mx-auto bg-gradient-to-r from-[#FFF1F2] via-white to-[#FDF2F8] border-2 border-[#FBCFE8] rounded-3xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <ScrollReveal direction="up" delay={0.15} distance={20} className="mt-8 max-w-4xl mx-auto bg-gradient-to-r from-[#FFF1F2] via-white to-[#FDF2F8] border-2 border-[#FBCFE8] rounded-3xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             {/* Overlapping Thumbnails from the poster */}
             <div className="flex -space-x-3 shrink-0">
@@ -111,17 +112,17 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
 
           <button
             onClick={() => setIsPriceListModalOpen(true)}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#581C87] hover:bg-[#4A148C] text-white text-xs sm:text-sm font-bold shadow transition-all flex items-center justify-center gap-2 whitespace-nowrap"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#581C87] hover:bg-[#4A148C] text-white text-xs sm:text-sm font-bold shadow transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
           >
             <FileText className="w-4 h-4 text-purple-200" />
             <span>Open Price List Poster</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
-        </div>
+        </ScrollReveal>
 
         {/* Menu Cards Grid */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredItems.map((item) => {
+          {filteredItems.map((item, idx) => {
             const currentWeight = getWeightForItem(item);
             const isCake = item.defaultWeight !== undefined;
             const finalPrice = isCake ? item.price * currentWeight : item.price;
@@ -131,9 +132,10 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
               <motion.div
                 key={item.id}
                 layout
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.45, delay: (idx % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className="group bg-white rounded-3xl overflow-hidden border border-[#F0DFD5] shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>

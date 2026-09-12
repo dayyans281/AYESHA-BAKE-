@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X, MessageCircle, Eye, Tag, Users, Cake, ArrowRight, ShieldCheck, Heart } from 'lucide-react';
 import { GALLERY_ITEMS, createWhatsAppUrl } from '../data/bakeryData';
 import { GalleryItem, GalleryCategory, MenuItem } from '../types';
+import { ScrollReveal } from './ScrollReveal';
 
 interface GallerySectionProps {
   onSelectForOrder?: (galleryItem: GalleryItem) => void;
@@ -30,7 +31,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onSelectForOrder
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto">
+        <ScrollReveal direction="up" distance={28} className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FCE7F3] text-[#BE185D] text-xs font-bold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             100% Real Bakery Showcase
@@ -43,15 +44,15 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onSelectForOrder
             From luxury wedding tiers and authentic Rasmalai to handcrafted 3D car shapes—our motto is 
             <strong className="text-[#BE185D]"> “ALL DESIGN CAKE PROVIDE”</strong>.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Filter Tabs */}
-        <div className="mt-10 flex items-center justify-center flex-wrap gap-2 sm:gap-2.5">
+        <ScrollReveal direction="up" delay={0.1} distance={20} className="mt-10 flex items-center justify-center flex-wrap gap-2 sm:gap-2.5">
           {filters.map((f) => (
             <button
               key={f.id}
               onClick={() => setActiveFilter(f.id)}
-              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer ${
                 activeFilter === f.id
                   ? 'bg-[#3E2723] text-white shadow-md scale-102'
                   : 'bg-white text-[#5D4037] hover:bg-[#FCE7F3] hover:text-[#BE185D] border border-[#E8D8CF]'
@@ -67,17 +68,18 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onSelectForOrder
               </span>
             </button>
           ))}
-        </div>
+        </ScrollReveal>
 
         {/* Gallery Grid */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredItems.map((item) => (
+          {filteredItems.map((item, idx) => (
             <motion.div
               key={item.id}
               layout
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.45, delay: (idx % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="group relative bg-white rounded-3xl overflow-hidden border border-[#F0DFD5] shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div

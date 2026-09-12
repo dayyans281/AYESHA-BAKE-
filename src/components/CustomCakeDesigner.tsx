@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { triggerConfetti } from '../utils/confetti';
 import { Sparkles, Heart, MessageCircle, Calendar, Edit3, ShieldCheck, Check, Plus } from 'lucide-react';
 import { WHATSAPP_NUMBER, createWhatsAppUrl, MENU_ITEMS } from '../data/bakeryData';
 import { MenuItem, ProductCustomization } from '../types';
+import { ScrollReveal } from './ScrollReveal';
 
 interface CustomCakeDesignerProps {
   onAddCustomDesignToCart?: (item: MenuItem, customization: ProductCustomization) => void;
@@ -103,7 +105,7 @@ Hello Chef Ayesha! I would like to confirm this custom cake order. Please let me
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto">
+        <ScrollReveal direction="up" distance={28} className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FCE7F3] text-[#BE185D] text-xs font-bold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             Custom Cake Studio
@@ -116,13 +118,19 @@ Hello Chef Ayesha! I would like to confirm this custom cake order. Please let me
             We calculate instant pricing and prepare a formatted WhatsApp order ready to send to 
             <strong className="text-[#3E2723]"> {WHATSAPP_NUMBER}</strong>.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Builder Layout: Form on Left, Live Ticket / Summary on Right */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Controls Column */}
-          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-[#F0DFD5] shadow-sm space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-[#F0DFD5] shadow-sm space-y-6"
+          >
             
             {/* 1. Base Flavor */}
             <div>
@@ -279,7 +287,13 @@ Hello Chef Ayesha! I would like to confirm this custom cake order. Please let me
           </div>
 
           {/* Live Order Ticket Column */}
-          <div className="lg:col-span-5 sticky top-28 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 sticky top-28 space-y-4"
+          >
             <div className="bg-gradient-to-br from-[#FFF8F0] via-white to-[#FDF2F8] p-6 sm:p-7 rounded-3xl border-2 border-[#FBCFE8] shadow-lg relative overflow-hidden">
               
               <div className="flex items-center justify-between pb-4 border-b border-[#F5E6DF]">
@@ -388,7 +402,7 @@ Hello Chef Ayesha! I would like to confirm this custom cake order. Please let me
                 Direct line to Chef Ayesha: <strong className="text-[#3E2723]">{WHATSAPP_NUMBER}</strong>
               </p>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 

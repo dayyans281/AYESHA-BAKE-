@@ -1,8 +1,9 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Sparkles, Heart, CheckCircle2, Phone, UtensilsCrossed } from 'lucide-react';
 import { WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
 import { useCustomPhotos } from '../utils/customPhotoStore';
+import { ScrollReveal, ScrollStaggerContainer, ScrollStaggerItem } from './ScrollReveal';
 
 interface AboutSectionProps {
   onCustomCakeClick: () => void;
@@ -34,7 +35,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto">
+        <ScrollReveal direction="up" distance={30} className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FCE7F3] text-[#BE185D] text-xs font-bold uppercase tracking-wider mb-3">
             <Heart className="w-3.5 h-3.5 fill-[#BE185D]" />
             Our Story & Craft
@@ -59,7 +60,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
               — Bring us ANY picture or theme, and we will bake it for you!
             </span>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Two Showcase Feature Cards with Real Ayesha Bake House Custom Cakes */}
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -153,11 +154,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
         </div>
 
         {/* Highlights Grid */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <ScrollStaggerContainer staggerDelay={0.12} className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {highlights.map((item, idx) => (
-            <div
+            <ScrollStaggerItem
               key={idx}
-              className="p-6 rounded-2xl bg-[#FFF9F5] border border-[#F2DDD2] hover:border-[#BE185D]/40 transition-colors"
+              className="p-6 rounded-2xl bg-[#FFF9F5] border border-[#F2DDD2] hover:border-[#BE185D]/40 transition-all hover:-translate-y-1 duration-200"
             >
               <div className="w-10 h-10 rounded-xl bg-[#FCE7F3] flex items-center justify-center text-[#BE185D] mb-4">
                 <CheckCircle2 className="w-5 h-5" />
@@ -168,12 +169,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
               <p className="mt-2 text-xs sm:text-sm text-[#6E4F42] leading-relaxed">
                 {item.desc}
               </p>
-            </div>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
 
         {/* CTA Bar */}
-        <div className="mt-12 text-center">
+        <ScrollReveal direction="up" delay={0.1} distance={20} className="mt-12 text-center">
           <div className="inline-flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={onCustomCakeClick}
@@ -191,7 +192,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
               <span>Send Picture on WhatsApp ({WHATSAPP_NUMBER})</span>
             </a>
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
     </section>
