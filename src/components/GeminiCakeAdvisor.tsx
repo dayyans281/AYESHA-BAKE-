@@ -13,7 +13,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: 'msg-1',
     sender: 'assistant',
-    text: "Hello! Warmest welcome to AYESHA BAKE! 🧁 I'm Chef Ayesha's AI Cake Concierge. Our motto is 'Baked with Love, Made for You'. We provide ALL design cakes—from 3D sculpted car cakes to Sonic themes, royal Rasmalai, and decadent chocolate fudge. What sweet celebration are you planning today?",
+    text: "Hello! Warmest welcome to AYESHA BAKE HOUSE! 🧁 I'm Chef Ayesha's AI Cake Concierge. Our motto is 'Baked with Love, Made for You'. We provide ALL design cakes—from 3D sculpted car cakes to Sonic themes, royal Rasmalai, and decadent chocolate fudge. What sweet celebration are you planning today?",
     timestamp: 'Just now',
   },
 ];

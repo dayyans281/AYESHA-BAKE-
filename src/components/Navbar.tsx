@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Cake, ShoppingBag, Phone, MessageCircle, Menu as MenuIcon, X, Sparkles, Music, Volume2 } from 'lucide-react';
+import { Cake, ShoppingBag, Phone, MessageCircle, Menu as MenuIcon, X, Sparkles, Music, Volume2, Camera } from 'lucide-react';
 import { WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
 
 interface NavbarProps {
@@ -10,6 +10,7 @@ interface NavbarProps {
   isMusicPlaying?: boolean;
   onToggleMusic?: () => void;
   onOpenWelcome?: () => void;
+  onOpenPhotoManager?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -20,6 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isMusicPlaying = false,
   onToggleMusic,
   onOpenWelcome,
+  onOpenPhotoManager,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -58,11 +60,22 @@ export const Navbar: React.FC<NavbarProps> = ({
         {onOpenWelcome && (
           <button
             onClick={onOpenWelcome}
-            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-bold text-[11px] hover:opacity-90 shadow-xs transition-opacity"
-            title="Open Welcome to Ayesha Bake Celebration"
+            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-bold text-[11px] hover:opacity-90 shadow-xs transition-opacity cursor-pointer"
+            title="Open Welcome to Ayesha Bake House Celebration"
           >
             <Sparkles className="w-3 h-3 text-amber-300" />
             <span>Welcome Banner</span>
+          </button>
+        )}
+
+        {onOpenPhotoManager && (
+          <button
+            onClick={onOpenPhotoManager}
+            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#BE185D] hover:bg-[#9D174D] text-white font-bold text-[11px] shadow-xs transition-colors cursor-pointer"
+            title="Upload and manage real cake photos"
+          >
+            <Camera className="w-3 h-3" />
+            <span>Upload Real Photos / تصاویر</span>
           </button>
         )}
 
@@ -91,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         <span className="hidden sm:inline text-rose-200">|</span>
         <a
-          href={createWhatsAppUrl("Hello Ayesha Bake! I want to order a cake.")}
+          href={createWhatsAppUrl("Hello Ayesha Bake House! I want to order a cake.")}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 hover:text-[#86EFAC] transition-colors font-bold underline decoration-dotted"
@@ -118,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div className="flex flex-col">
                 <span className="text-xl sm:text-2xl font-serif font-black tracking-tight text-[#3E2723] uppercase">
-                  AYESHA BAKE
+                  AYESHA BAKE HOUSE
                 </span>
                 <span className="text-xs font-medium text-[#BE185D] tracking-wider uppercase -mt-1 font-script text-base sm:text-lg">
                   Baked with Love, Made for You
@@ -142,6 +155,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Header Right Actions */}
             <div className="flex items-center gap-2 sm:gap-3">
+              {/* Photo Manager Button */}
+              {onOpenPhotoManager && (
+                <button
+                  onClick={onOpenPhotoManager}
+                  className="hidden xl:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-[#BE185D] bg-white border border-[#F472B6]/40 hover:bg-[#FCE7F3] transition-all hover:scale-102 cursor-pointer shadow-2xs"
+                  title="Upload / Change Cake Photos"
+                >
+                  <Camera className="w-3.5 h-3.5 text-[#BE185D]" />
+                  <span>Upload Photos</span>
+                </button>
+              )}
+
               {/* AI Cake Advisor Button */}
               <button
                 id="btn-ai-advisor-nav"
@@ -208,6 +233,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="pt-2 border-t border-[#F5E6DF] flex flex-col gap-2">
+              {onOpenPhotoManager && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenPhotoManager();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-[#BE185D] bg-pink-50 border border-pink-200"
+                >
+                  <Camera className="w-4 h-4 text-[#BE185D]" />
+                  <span>Upload Real Cake Photos / تصاویر</span>
+                </button>
+              )}
+
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);

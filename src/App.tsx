@@ -14,9 +14,10 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { GeminiCakeAdvisor } from './components/GeminiCakeAdvisor';
 import { WelcomeSplashModal } from './components/WelcomeSplashModal';
 import { BackgroundMusicPlayer } from './components/BackgroundMusicPlayer';
+import { PhotoUploadModal } from './components/PhotoUploadModal';
 import { focusMusic } from './utils/focusMusicEngine';
 import { MenuItem, CartItem, ProductCustomization, GalleryItem } from './types';
-import { MessageCircle, Sparkles, Cake, ShoppingBag } from 'lucide-react';
+import { MessageCircle, Sparkles, Cake, ShoppingBag, Camera } from 'lucide-react';
 import { WHATSAPP_NUMBER, createWhatsAppUrl, MENU_ITEMS } from './data/bakeryData';
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [customizingItem, setCustomizingItem] = useState<MenuItem | null>(null);
   const [isAiAdvisorOpen, setIsAiAdvisorOpen] = useState(false);
+  const [isPhotoManagerOpen, setIsPhotoManagerOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isWelcomeOpen, setIsWelcomeOpen] = useState(true);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
@@ -199,6 +201,7 @@ export default function App() {
         isMusicPlaying={isMusicPlaying}
         onToggleMusic={handleToggleMusic}
         onOpenWelcome={() => setIsWelcomeOpen(true)}
+        onOpenPhotoManager={() => setIsPhotoManagerOpen(true)}
       />
 
       {/* Main Content */}
@@ -216,6 +219,7 @@ export default function App() {
         <MenuSection
           onAddToCart={handleQuickAdd}
           onCustomizeItem={(item) => setCustomizingItem(item)}
+          onOpenPhotoManager={() => setIsPhotoManagerOpen(true)}
         />
 
         <CustomCakeDesigner
@@ -292,7 +296,7 @@ export default function App() {
 
         {/* WhatsApp Direct Floating Button with Pulse Effect */}
         <a
-          href={createWhatsAppUrl("Hello Ayesha Bake! I want to order a cake.")}
+          href={createWhatsAppUrl("Hello Ayesha Bake House! I want to order a cake.")}
           target="_blank"
           rel="noopener noreferrer"
           className="pointer-events-auto group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#15803D] hover:bg-[#166534] text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
@@ -317,12 +321,18 @@ export default function App() {
         onTogglePlay={handleToggleMusic}
       />
 
-      {/* Colorful Welcome to Ayesha Bake Modal */}
+      {/* Colorful Welcome to Ayesha Bake House Modal */}
       <WelcomeSplashModal
         isOpen={isWelcomeOpen}
         onClose={() => setIsWelcomeOpen(false)}
         onEnterWithMusic={handleEnterWithMusic}
         onEnterSilent={() => setIsWelcomeOpen(false)}
+      />
+
+      {/* Real Bakery Photos Upload & Manager Modal */}
+      <PhotoUploadModal
+        isOpen={isPhotoManagerOpen}
+        onClose={() => setIsPhotoManagerOpen(false)}
       />
 
       {/* Toast Notification */}

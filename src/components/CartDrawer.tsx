@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Trash2, Plus, Minus, ShoppingBag, MessageCircle, Heart, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { CartItem } from '../types';
 import { WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
 

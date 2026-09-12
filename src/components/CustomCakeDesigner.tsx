@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import confetti from 'canvas-confetti';
+import { triggerConfetti } from '../utils/confetti';
 import { Sparkles, Heart, MessageCircle, Calendar, Edit3, ShieldCheck, Check, Plus } from 'lucide-react';
 import { WHATSAPP_NUMBER, createWhatsAppUrl, MENU_ITEMS } from '../data/bakeryData';
 import { MenuItem, ProductCustomization } from '../types';
@@ -45,7 +45,7 @@ export const CustomCakeDesigner: React.FC<CustomCakeDesignerProps> = ({ onAddCus
 
   const estimatedTotal = currentFlavorObj.baseRate * weight + currentThemeObj.fee;
 
-  const generatedWhatsAppText = `*CUSTOM CAKE ORDER - AYESHA BAKE*
+  const generatedWhatsAppText = `*CUSTOM CAKE ORDER - AYESHA BAKE HOUSE*
 -----------------------------
 *Customer Name:* ${customerName || 'Valued Customer'}
 *Flavor:* ${flavor}
@@ -59,7 +59,7 @@ export const CustomCakeDesigner: React.FC<CustomCakeDesignerProps> = ({ onAddCus
 Hello Chef Ayesha! I would like to confirm this custom cake order. Please let me know the booking confirmation.`;
 
   const handleOrderWhatsApp = () => {
-    confetti({
+    triggerConfetti({
       particleCount: 80,
       spread: 70,
       origin: { y: 0.6 },

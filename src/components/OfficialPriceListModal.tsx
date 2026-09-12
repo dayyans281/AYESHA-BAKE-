@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, MessageCircle, ShoppingBag, ShieldCheck, Heart } from 'lucide-react';
+import { X, Sparkles, MessageCircle, ShoppingBag, ShieldCheck, Heart, Image as ImageIcon, ListFilter, Upload } from 'lucide-react';
 import { MENU_ITEMS, WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
 import { MenuItem } from '../types';
+import { useCustomPhotos } from '../utils/customPhotoStore';
 
 // Real cake images from the poster borders
 import redVelvetCakeImg from '../assets/images/red_velvet_cake_1789206690900.jpg';
@@ -15,6 +16,7 @@ interface OfficialPriceListModalProps {
   onClose: () => void;
   onCustomizeItem: (item: MenuItem) => void;
   onQuickAdd: (item: MenuItem) => void;
+  onOpenPhotoManager?: () => void;
 }
 
 export const OfficialPriceListModal: React.FC<OfficialPriceListModalProps> = ({
@@ -22,7 +24,11 @@ export const OfficialPriceListModal: React.FC<OfficialPriceListModalProps> = ({
   onClose,
   onCustomizeItem,
   onQuickAdd,
+  onOpenPhotoManager,
 }) => {
+  const { photos } = useCustomPhotos();
+  const [activeTab, setActiveTab] = useState<'table' | 'poster'>('table');
+
   if (!isOpen) return null;
 
   const priceTable = [
@@ -90,98 +96,161 @@ Please guide me with booking availability.`;
             <p className="mt-2 text-xs text-[#5D4037]">
               “Baked with Love, Made for You” • Contact: <strong className="text-[#3E2723]">{WHATSAPP_NUMBER}</strong>
             </p>
+
+            {/* Tab Navigation between Interactive Table and Original Poster Graphic */}
+            <div className="mt-4 flex items-center justify-center gap-2">
+              <button
+                onClick={() => setActiveTab('table')}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                  activeTab === 'table'
+                    ? 'bg-[#BE185D] text-white shadow-md'
+                    : 'bg-white/80 text-[#5D4037] hover:bg-white border border-[#E8D8CF]'
+                }`}
+              >
+                <ListFilter className="w-3.5 h-3.5" />
+                <span>Interactive Price Table</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('poster')}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                  activeTab === 'poster'
+                    ? 'bg-[#BE185D] text-white shadow-md'
+                    : 'bg-white/80 text-[#5D4037] hover:bg-white border border-[#E8D8CF]'
+                }`}
+              >
+                <ImageIcon className="w-3.5 h-3.5" />
+                <span>Original Poster Graphic</span>
+              </button>
+            </div>
           </div>
 
-          {/* Poster Cakes Showcase Row */}
-          <div className="bg-amber-50/50 py-3 px-4 border-b border-[#EED9CE] flex items-center justify-around gap-2 overflow-x-auto text-[11px] text-[#5D4037]">
-            <div className="flex items-center gap-2 shrink-0">
-              <img src={redVelvetCakeImg} alt="Red velvet" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
-              <span className="font-semibold">Red Velvet</span>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <img src={fruitCocktailCakeImg} alt="Fruit cocktail" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
-              <span className="font-semibold">Fresh Fruit Cocktail</span>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <img src={mangoGlazeCakeImg} alt="Mango cake" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
-              <span className="font-semibold">Mango Mirror Glaze</span>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <img src={fudgeCakeImg} alt="Fudge cake" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
-              <span className="font-semibold">Belgian Fudge</span>
-            </div>
-          </div>
+          {activeTab === 'poster' ? (
+            /* Original Poster Graphic View */
+            <div className="p-4 sm:p-6 max-h-[60vh] overflow-y-auto flex flex-col items-center">
+              <div className="relative max-w-md w-full rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-white">
+                <img
+                  src={photos.rateCard}
+                  alt="Ayesha Baking House Official Price List Poster"
+                  className="w-full h-auto object-contain rounded-xl"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
 
-          {/* Authentic Price Table Content */}
-          <div className="p-4 sm:p-6 max-h-[55vh] overflow-y-auto">
-            <div className="rounded-2xl border-2 border-[#1E40AF]/30 overflow-hidden shadow-sm">
-              {/* Table Header like in image */}
-              <div className="grid grid-cols-12 text-white font-bold text-xs sm:text-sm">
-                <div className="col-span-8 sm:col-span-8 bg-[#0284C7] py-2.5 px-4 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-sky-200" />
-                  <span>Items</span>
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                {onOpenPhotoManager && (
+                  <button
+                    onClick={onOpenPhotoManager}
+                    className="px-4 py-2 rounded-xl text-xs font-bold bg-[#BE185D] text-white hover:bg-[#9D174D] flex items-center gap-1.5 shadow-sm transition-all"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload / Change Menu Picture</span>
+                  </button>
+                )}
+                <a
+                  href={createWhatsAppUrl("Hello Chef Ayesha! I am checking your Official Price List Poster and want to order a cake.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#15803D] hover:bg-[#166534] text-white flex items-center gap-1.5 shadow-sm transition-all"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 fill-white" />
+                  <span>Order on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Poster Cakes Showcase Row */}
+              <div className="bg-amber-50/50 py-3 px-4 border-b border-[#EED9CE] flex items-center justify-around gap-2 overflow-x-auto text-[11px] text-[#5D4037]">
+                <div className="flex items-center gap-2 shrink-0">
+                  <img src={redVelvetCakeImg} alt="Red velvet" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
+                  <span className="font-semibold">Red Velvet</span>
                 </div>
-                <div className="col-span-4 sm:col-span-4 bg-[#581C87] py-2.5 px-4 text-right">
-                  <span>Price</span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <img src={fruitCocktailCakeImg} alt="Fruit cocktail" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
+                  <span className="font-semibold">Fresh Fruit Cocktail</span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <img src={mangoGlazeCakeImg} alt="Mango cake" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
+                  <span className="font-semibold">Mango Mirror Glaze</span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <img src={fudgeCakeImg} alt="Fudge cake" className="w-8 h-8 rounded-full object-cover border border-[#F472B6]" />
+                  <span className="font-semibold">Belgian Fudge</span>
                 </div>
               </div>
 
-              {/* Rows */}
-              <div className="divide-y divide-[#E2E8F0] bg-white">
-                {priceTable.map((row, idx) => {
-                  const matchedMenuItem = MENU_ITEMS.find((m) => m.id === row.id) || MENU_ITEMS[0];
-
-                  return (
-                    <div
-                      key={row.name}
-                      className={`grid grid-cols-12 items-center px-4 py-3 text-xs sm:text-sm transition-colors hover:bg-pink-50/50 ${
-                        idx % 2 === 0 ? 'bg-white' : 'bg-[#FAF5EE]/40'
-                      }`}
-                    >
-                      <div className="col-span-8 sm:col-span-8 pr-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-[#BE185D] shrink-0" />
-                          <span className="font-bold text-[#3E2723]">{row.name}</span>
-                        </div>
-                        <span className="text-[10px] text-[#8D6E63] italic sm:mr-3">
-                          {row.tag}
-                        </span>
-                      </div>
-
-                      <div className="col-span-4 sm:col-span-4 flex items-center justify-end gap-2">
-                        <div className="text-right">
-                          <span className="font-black text-[#1E3A8A] text-sm sm:text-base">
-                            {row.price}
-                          </span>
-                          <span className="text-[10px] text-gray-500 block leading-none">
-                            {row.per}
-                          </span>
-                        </div>
-
-                        <button
-                          onClick={() => {
-                            onClose();
-                            onCustomizeItem(matchedMenuItem);
-                          }}
-                          className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#BE185D] text-white hover:bg-[#9D174D] shadow-xs"
-                          title="Customize & Order"
-                        >
-                          Order
-                        </button>
-                      </div>
+              {/* Authentic Price Table Content */}
+              <div className="p-4 sm:p-6 max-h-[55vh] overflow-y-auto">
+                <div className="rounded-2xl border-2 border-[#1E40AF]/30 overflow-hidden shadow-sm">
+                  {/* Table Header like in image */}
+                  <div className="grid grid-cols-12 text-white font-bold text-xs sm:text-sm">
+                    <div className="col-span-8 sm:col-span-8 bg-[#0284C7] py-2.5 px-4 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-sky-200" />
+                      <span>Items</span>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                    <div className="col-span-4 sm:col-span-4 bg-[#581C87] py-2.5 px-4 text-right">
+                      <span>Price</span>
+                    </div>
+                  </div>
 
-            <div className="mt-4 p-3.5 rounded-xl bg-[#FCE7F3]/70 border border-[#F472B6]/40 flex items-center gap-3 text-xs text-[#831843]">
-              <ShieldCheck className="w-5 h-5 text-[#BE185D] shrink-0" />
-              <span>
-                <strong>ALL DESIGN CAKE PROVIDE:</strong> For 3D sculpted car cakes, cartoon theme cakes, photo cakes, or wedding tiers, custom pricing applies. We provide exact estimates on WhatsApp!
-              </span>
-            </div>
-          </div>
+                  {/* Rows */}
+                  <div className="divide-y divide-[#E2E8F0] bg-white">
+                    {priceTable.map((row, idx) => {
+                      const matchedMenuItem = MENU_ITEMS.find((m) => m.id === row.id) || MENU_ITEMS[0];
+
+                      return (
+                        <div
+                          key={row.name}
+                          className={`grid grid-cols-12 items-center px-4 py-3 text-xs sm:text-sm transition-colors hover:bg-pink-50/50 ${
+                            idx % 2 === 0 ? 'bg-white' : 'bg-[#FAF5EE]/40'
+                          }`}
+                        >
+                          <div className="col-span-8 sm:col-span-8 pr-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                            <div className="flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full bg-[#BE185D] shrink-0" />
+                              <span className="font-bold text-[#3E2723]">{row.name}</span>
+                            </div>
+                            <span className="text-[10px] text-[#8D6E63] italic sm:mr-3">
+                              {row.tag}
+                            </span>
+                          </div>
+
+                          <div className="col-span-4 sm:col-span-4 flex items-center justify-end gap-2">
+                            <div className="text-right">
+                              <span className="font-black text-[#1E3A8A] text-sm sm:text-base">
+                                {row.price}
+                              </span>
+                              <span className="text-[10px] text-gray-500 block leading-none">
+                                {row.per}
+                              </span>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                onClose();
+                                onCustomizeItem(matchedMenuItem);
+                              }}
+                              className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#BE185D] text-white hover:bg-[#9D174D] shadow-xs"
+                              title="Customize & Order"
+                            >
+                              Order
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-4 p-3.5 rounded-xl bg-[#FCE7F3]/70 border border-[#F472B6]/40 flex items-center gap-3 text-xs text-[#831843]">
+                  <ShieldCheck className="w-5 h-5 text-[#BE185D] shrink-0" />
+                  <span>
+                    <strong>ALL DESIGN CAKE PROVIDE:</strong> For 3D sculpted car cakes, cartoon theme cakes, photo cakes, or wedding tiers, custom pricing applies. We provide exact estimates on WhatsApp!
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Modal Footer */}
           <div className="p-4 sm:p-5 bg-white border-t border-[#F0DFD5] flex flex-col sm:flex-row items-center justify-between gap-3">

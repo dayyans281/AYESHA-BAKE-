@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import confetti from 'canvas-confetti';
+import { triggerConfetti } from '../utils/confetti';
 import { Sparkles, Music, Heart, Volume2, ArrowRight, Cake, Check, ShieldCheck } from 'lucide-react';
 import { WHATSAPP_NUMBER } from '../data/bakeryData';
+import { useCustomPhotos } from '../utils/customPhotoStore';
 
 // Showcase thumbnails
-import carCakeImg from '../assets/images/car_cake_1789205714144.jpg';
-import sonicCakeImg from '../assets/images/sonic_cake_1789205755342.jpg';
 import fruitCocktailCakeImg from '../assets/images/fruit_cocktail_cake_1789206671946.jpg';
 import redVelvetCakeImg from '../assets/images/red_velvet_cake_1789206690900.jpg';
 
@@ -23,19 +22,16 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
   onEnterWithMusic,
   onEnterSilent,
 }) => {
+  const { photos } = useCustomPhotos();
   useEffect(() => {
     if (isOpen) {
-      // Trigger a soft celebratory confetti burst on launch
-      try {
-        confetti({
-          particleCount: 70,
-          spread: 80,
-          origin: { y: 0.4 },
-          colors: ['#BE185D', '#F472B6', '#F59E0B', '#3B82F6', '#10B981', '#8B5CF6'],
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      // Trigger a soft celebratory confetti burst safely on launch
+      triggerConfetti({
+        particleCount: 70,
+        spread: 80,
+        origin: { y: 0.4 },
+        colors: ['#BE185D', '#F472B6', '#F59E0B', '#3B82F6', '#10B981', '#8B5CF6'],
+      });
     }
   }, [isOpen]);
 
@@ -75,7 +71,7 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
               <Sparkles className="w-4 h-4 text-[#F59E0B]" />
             </div>
 
-            {/* COLORFUL "WELCOME TO AYESHA BAKE" HEADING */}
+            {/* COLORFUL "WELCOME TO AYESHA BAKE HOUSE" HEADING */}
             <div className="my-2">
               <h1 className="text-3xl sm:text-5xl font-black font-serif tracking-tight leading-tight uppercase drop-shadow-sm">
                 <span className="bg-gradient-to-r from-[#E11D48] via-[#EA580C] to-[#D97706] bg-clip-text text-transparent">
@@ -85,7 +81,7 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
                   TO
                 </span>{' '}
                 <span className="bg-gradient-to-r from-[#BE185D] via-[#DB2777] via-[#9333EA] to-[#4F46E5] bg-clip-text text-transparent underline decoration-[#F472B6] decoration-wavy decoration-2">
-                  AYESHA BAKE
+                  AYESHA BAKE HOUSE
                 </span>
               </h1>
             </div>
@@ -103,9 +99,10 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
             <div className="mt-6 grid grid-cols-4 gap-2 sm:gap-3 p-3 rounded-2xl bg-gradient-to-r from-pink-50/70 via-amber-50/70 to-rose-50/70 border border-pink-100">
               <div className="flex flex-col items-center">
                 <img
-                  src={carCakeImg}
+                  src={photos.carCake}
                   alt="3D Car cake"
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border-2 border-amber-300 shadow-xs hover:scale-105 transition-transform"
+                  referrerPolicy="no-referrer"
                 />
                 <span className="text-[10px] font-bold text-[#3E2723] mt-1 text-center line-clamp-1">
                   3D Car Cake
@@ -113,9 +110,10 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
               </div>
               <div className="flex flex-col items-center">
                 <img
-                  src={sonicCakeImg}
+                  src={photos.sonicCake}
                   alt="Sonic birthday cake"
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border-2 border-sky-300 shadow-xs hover:scale-105 transition-transform"
+                  referrerPolicy="no-referrer"
                 />
                 <span className="text-[10px] font-bold text-[#3E2723] mt-1 text-center line-clamp-1">
                   Sonic Theme
@@ -177,7 +175,7 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
                 className="w-full sm:w-auto flex-1 py-4 px-6 rounded-2xl font-bold text-sm sm:text-base text-white bg-gradient-to-r from-[#BE185D] via-[#D946EF] to-[#8B5CF6] hover:from-[#9D174D] hover:to-[#7C3AED] shadow-lg hover:shadow-xl hover:scale-102 transition-all flex items-center justify-center gap-2.5"
               >
                 <Music className="w-5 h-5 fill-white" />
-                <span>Enter Ayesha Bake & Play Music</span>
+                <span>Enter Ayesha Bake House & Play Music</span>
                 <Sparkles className="w-4 h-4 text-amber-200" />
               </button>
 

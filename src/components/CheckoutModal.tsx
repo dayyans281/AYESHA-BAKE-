@@ -18,7 +18,7 @@ import {
   ArrowRight,
   ArrowLeft,
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { triggerConfetti } from '../utils/confetti';
 import { CartItem, OrderDetails } from '../types';
 import { WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
 
@@ -107,7 +107,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setStep('confirmed');
     onClearCart();
 
-    confetti({
+    triggerConfetti({
       particleCount: 120,
       spread: 80,
       origin: { y: 0.6 },
@@ -116,7 +116,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const generateWhatsAppMessage = (order: OrderDetails) => {
     let text = `🍰 *NEW VERIFIED ORDER: ${order.orderId}*\n`;
-    text += `*AYESHA BAKE - Baked with Love, Made for You*\n`;
+    text += `*AYESHA BAKE HOUSE - Baked with Love, Made for You*\n`;
     text += `-------------------------------------------\n`;
     text += `👤 *Customer:* ${order.customerName}\n`;
     text += `📞 *WhatsApp:* ${order.customerPhone}\n`;
@@ -200,7 +200,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif font-bold text-base sm:text-lg text-white">
-                AYESHA BAKE Secure Checkout
+                AYESHA BAKE HOUSE Secure Checkout
               </h3>
               <p className="text-[11px] text-rose-200">
                 Direct kitchen order verification & door-to-door delivery
@@ -629,7 +629,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="text-left p-5 rounded-2xl bg-white border border-[#EFE3DB] shadow-2xs space-y-3 text-xs">
                 <div className="flex items-center justify-between pb-2 border-b border-[#F0DFD5]">
                   <div>
-                    <span className="font-bold text-[#3E2723] text-sm block">AYESHA BAKE Receipt</span>
+                    <span className="font-bold text-[#3E2723] text-sm block">AYESHA BAKE HOUSE Receipt</span>
                     <span className="text-[10px] text-[#8D6E63]">{confirmedOrder.createdAt}</span>
                   </div>
                   <span className="font-mono font-bold text-xs bg-[#FAF5EE] px-2 py-1 rounded-md border border-[#E8D8CF]">

@@ -39,7 +39,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onSelectForOrder
             Real Cake <span className="text-[#BE185D]">Masterpiece Gallery</span>
           </h2>
           <p className="mt-3 text-sm sm:text-base text-[#5D4037] leading-relaxed">
-            Every photo showcases real cakes baked and hand-decorated by AYESHA BAKE. 
+            Every photo showcases real cakes baked and hand-decorated by AYESHA BAKE HOUSE. 
             From luxury wedding tiers and authentic Rasmalai to handcrafted 3D car shapes—our motto is 
             <strong className="text-[#BE185D]"> “ALL DESIGN CAKE PROVIDE”</strong>.
           </p>
@@ -141,7 +141,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onSelectForOrder
                   </button>
 
                   <a
-                    href={createWhatsAppUrl(`Hello Ayesha Bake! I love your real cake design: "${item.title}". Can I order this customized for my event?`)}
+                    href={createWhatsAppUrl(`Hello Ayesha Bake House! I love your real cake design: "${item.title}". Can I order this customized for my event?`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-3 py-1.5 rounded-xl bg-[#DCFCE7] hover:bg-[#BBF7D0] text-[#15803D] text-xs font-bold transition-colors flex items-center gap-1.5"
@@ -220,7 +220,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onSelectForOrder
 
                   <a
                     href={createWhatsAppUrl(
-                      `Hello Ayesha Bake! I saw "${selectedItem.title}" in your Real Cake Gallery and would like to order this design.`
+                      `Hello Ayesha Bake House! I saw "${selectedItem.title}" in your Real Cake Gallery and would like to order this design.`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"

@@ -2,9 +2,9 @@ import { MenuItem, Review, GalleryItem } from '../types';
 
 // Real Cake and Bakery Images from User Uploads & Themes
 import heroCakeImg from '../assets/images/hero_cake_1789205695116.jpg';
-import carCakeImg from '../assets/images/car_cake_1789205714144.jpg';
+import carCakeImg from '../assets/images/real_car_cake_1789234029966.jpg';
 import carCakePartyImg from '../assets/images/car_cake_party_1789206731675.jpg';
-import sonicCakeImg from '../assets/images/sonic_cake_1789205755342.jpg';
+import sonicCakeImg from '../assets/images/sonic_dino_cake_1789234049604.jpg';
 import sonicPartyCakeImg from '../assets/images/sonic_party_cake_1789206753310.jpg';
 import rasmalaiCakeImg from '../assets/images/rasmalai_cake_1789205734830.jpg';
 import fudgeCakeImg from '../assets/images/fudge_cake_1789205773641.jpg';
@@ -412,7 +412,7 @@ export const REVIEWS: Review[] = [
     occasion: 'Kids Birthday Bash & Eid',
     rating: 5,
     date: '1 week ago',
-    comment: 'Ayesha Bake’s Rasmalai Cake is honestly the undisputed best in town. The saffron milk flavor soaked right through every crumb of sponge, with real soft rasmalai on top. Everyone at our family gathering asked for Chef Ayesha’s WhatsApp number!',
+    comment: 'Ayesha Bake House’s Rasmalai Cake is honestly the undisputed best in town. The saffron milk flavor soaked right through every crumb of sponge, with real soft rasmalai on top. Everyone at our family gathering asked for Chef Ayesha’s WhatsApp number!',
     cakeOrdered: 'Royal Rasmalai Cake (3 lbs)',
     verifiedBuyer: true,
     likesCount: 38,

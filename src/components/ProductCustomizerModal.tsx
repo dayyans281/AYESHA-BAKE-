@@ -116,7 +116,7 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
   };
 
   const handleInstantWhatsApp = () => {
-    let msg = `*CUSTOM ORDER INQUIRY - AYESHA BAKE*\n`;
+    let msg = `*CUSTOM ORDER INQUIRY - AYESHA BAKE HOUSE*\n`;
     msg += `------------------------------------\n`;
     msg += `*Item:* ${item.name}\n`;
     if (isCake) {

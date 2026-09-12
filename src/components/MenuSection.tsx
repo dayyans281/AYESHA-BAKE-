@@ -13,9 +13,10 @@ import mangoGlazeCakeImg from '../assets/images/mango_glaze_cake_1789206710719.j
 interface MenuSectionProps {
   onAddToCart: (item: MenuItem, weightLbs?: number, customMessage?: string) => void;
   onCustomizeItem: (item: MenuItem) => void;
+  onOpenPhotoManager?: () => void;
 }
 
-export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomizeItem }) => {
+export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomizeItem, onOpenPhotoManager }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [selectedWeights, setSelectedWeights] = useState<Record<string, number>>({});
   const [addedItemNotice, setAddedItemNotice] = useState<string | null>(null);
@@ -254,7 +255,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
                     {/* Direct WhatsApp Order for this cake */}
                     <a
                       href={createWhatsAppUrl(
-                        `Hello Ayesha Bake! I would like to order: ${item.name} (${
+                        `Hello Ayesha Bake House! I would like to order: ${item.name} (${
                           isCake ? `${currentWeight} lbs` : '1 portion'
                         }) - Total: Rs. ${finalPrice}. Please confirm availability.`
                       )}
@@ -283,7 +284,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
             </p>
           </div>
           <a
-            href={createWhatsAppUrl("Hello Ayesha Bake! I would like to order a customized theme cake or special size.")}
+            href={createWhatsAppUrl("Hello Ayesha Bake House! I would like to order a customized theme cake or special size.")}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-2xl font-bold text-sm text-white bg-[#BE185D] hover:bg-[#9D174D] shadow-md transition-all whitespace-nowrap flex items-center gap-2"
@@ -301,6 +302,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToCart, onCustomi
         onClose={() => setIsPriceListModalOpen(false)}
         onCustomizeItem={onCustomizeItem}
         onQuickAdd={onAddToCart}
+        onOpenPhotoManager={onOpenPhotoManager}
       />
     </section>
   );

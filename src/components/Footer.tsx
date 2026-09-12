@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-2xl font-serif font-black tracking-tight text-white uppercase">
-                  AYESHA BAKE
+                  AYESHA BAKE HOUSE
                 </span>
                 <span className="text-xs font-medium text-[#F472B6] tracking-wider uppercase -mt-1 font-script text-lg">
                   Baked with Love, Made for You
@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
                 <div>
                   <p className="text-[10px] text-emerald-300 font-bold uppercase">WhatsApp Direct</p>
                   <a
-                    href={createWhatsAppUrl("Hello Ayesha Bake! I would like to order a freshly baked cake.")}
+                    href={createWhatsAppUrl("Hello Ayesha Bake House! I would like to order a freshly baked cake.")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-extrabold text-white hover:text-[#4ADE80] transition-colors"
@@ -92,7 +92,7 @@ export const Footer: React.FC = () => {
 
         {/* Footer Bottom */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-rose-200/60">
-          <p>© {currentYear} AYESHA BAKE. All rights reserved.</p>
+          <p>© {currentYear} AYESHA BAKE HOUSE. All rights reserved.</p>
           <p className="flex items-center gap-1">
             <span>Lovingly baked with</span>
             <Heart className="w-3.5 h-3.5 fill-[#F43F5E] text-[#F43F5E]" />

@@ -2,10 +2,9 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Sparkles, MessageCircle, ArrowRight, Heart, Star, Award, CheckCircle } from 'lucide-react';
 import heroCakeImg from '../assets/images/hero_cake_1789205695116.jpg';
-import carCakeImg from '../assets/images/car_cake_1789205714144.jpg';
-import sonicCakeImg from '../assets/images/sonic_cake_1789205755342.jpg';
 import fruitCocktailCakeImg from '../assets/images/fruit_cocktail_cake_1789206671946.jpg';
 import { WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
+import { useCustomPhotos } from '../utils/customPhotoStore';
 
 interface HeroProps {
   onOrderNowClick: () => void;
@@ -18,6 +17,7 @@ export const Hero: React.FC<HeroProps> = ({
   onExploreMenuClick,
   onOpenAiAdvisor,
 }) => {
+  const { photos } = useCustomPhotos();
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EE] to-[#FFFDF9] pt-8 pb-16 lg:pt-12 lg:pb-24">
       {/* Decorative Pastel Background Blobs */}
@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FCE7F3] border border-[#F472B6]/30 text-[#9D174D] text-xs sm:text-sm font-bold mb-5 shadow-xs"
             >
               <Sparkles className="w-4 h-4 text-[#DB2777]" />
-              <span>AYESHA BAKE • Baked with Love, Made for You</span>
+              <span>AYESHA BAKE HOUSE • Baked with Love, Made for You</span>
             </motion.div>
 
             {/* Main Heading */}
@@ -61,7 +61,7 @@ export const Hero: React.FC<HeroProps> = ({
               className="mt-5 text-base sm:text-lg text-[#5D4037] leading-relaxed max-w-2xl font-normal"
             >
               Delicious cakes, cupcakes, cookies and desserts freshly baked with love by{' '}
-              <strong className="text-[#3E2723] font-bold">AYESHA BAKE</strong>. From custom 3D
+              <strong className="text-[#3E2723] font-bold">AYESHA BAKE HOUSE</strong>. From custom 3D
               birthday cakes to royal Rasmalai fusions and gooey chocolate fudge.
             </motion.p>
 
@@ -126,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({
                     Direct WhatsApp Hotline
                   </p>
                   <a
-                    href={createWhatsAppUrl("Hello Ayesha Bake! I want to order a freshly baked cake.")}
+                    href={createWhatsAppUrl("Hello Ayesha Bake House! I want to order a freshly baked cake.")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-base font-extrabold text-[#1B4D3E] hover:underline hover:text-[#15803D] flex items-center gap-1.5"
@@ -169,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({
               <div className="relative rounded-[2rem] overflow-hidden aspect-[4/3] sm:aspect-square bg-[#FDF2F8]">
                 <img
                   src={heroCakeImg}
-                  alt="Ayesha Bake Artisanal Cake"
+                  alt="Ayesha Bake House Artisanal Cake"
                   className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
                 />
                 {/* Subtle Gradient Overlay */}
@@ -196,7 +196,7 @@ export const Hero: React.FC<HeroProps> = ({
                 className="absolute -top-6 -right-4 sm:-right-8 bg-white/95 backdrop-blur-md p-2 sm:p-2.5 rounded-2xl shadow-xl border border-pink-100 flex items-center gap-2.5 z-20 max-w-[210px]"
               >
                 <img
-                  src={carCakeImg}
+                  src={photos.carCake}
                   alt="3D yellow car cake"
                   className="w-11 h-11 rounded-xl object-cover border border-amber-300 shadow-xs shrink-0"
                 />
@@ -213,7 +213,7 @@ export const Hero: React.FC<HeroProps> = ({
                 className="absolute -bottom-6 -left-3 sm:-left-8 bg-white/95 backdrop-blur-md p-2 sm:p-2.5 rounded-2xl shadow-xl border border-pink-100 flex items-center gap-2.5 z-20 max-w-[220px]"
               >
                 <img
-                  src={sonicCakeImg}
+                  src={photos.sonicCake}
                   alt="Sonic theme cake"
                   className="w-11 h-11 rounded-xl object-cover border border-sky-300 shadow-xs shrink-0"
                 />

@@ -13,7 +13,7 @@ export const ContactSection: React.FC = () => {
 
   const handleSendQuickWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = `Hello Ayesha Bake! My name is ${inquiryName || 'Customer'}. ${inquiryMsg || 'I would like to inquire about ordering a custom cake.'}`;
+    const text = `Hello Ayesha Bake House! My name is ${inquiryName || 'Customer'}. ${inquiryMsg || 'I would like to inquire about ordering a custom cake.'}`;
     window.open(createWhatsAppUrl(text), '_blank');
   };
 
@@ -66,7 +66,7 @@ export const ContactSection: React.FC = () => {
               </p>
 
               <a
-                href={createWhatsAppUrl("Hello Ayesha Bake! I would like to place an order.")}
+                href={createWhatsAppUrl("Hello Ayesha Bake House! I would like to place an order.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 px-4 rounded-2xl bg-white text-[#15803D] font-bold text-sm hover:bg-emerald-50 transition-all flex items-center justify-center gap-2 shadow"
