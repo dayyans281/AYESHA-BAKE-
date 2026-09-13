@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FCE7F3] border border-[#F472B6]/30 text-[#9D174D] text-xs sm:text-sm font-bold mb-5 shadow-xs"
             >
               <Sparkles className="w-4 h-4 text-[#DB2777]" />
-              <span>AYESHA BAKE HOUSE • Baked with Love, Made for You</span>
+              <span>AYESHA BAKING HOUSE • Baked with Love, Made for You</span>
             </motion.div>
 
             {/* Main Heading */}
@@ -61,7 +61,7 @@ export const Hero: React.FC<HeroProps> = ({
               className="mt-5 text-base sm:text-lg text-[#5D4037] leading-relaxed max-w-2xl font-normal"
             >
               Delicious cakes, cupcakes, cookies and desserts freshly baked with love by{' '}
-              <strong className="text-[#3E2723] font-bold">AYESHA BAKE HOUSE</strong>. From custom 3D
+              <strong className="text-[#3E2723] font-bold">AYESHA BAKING HOUSE</strong>. From custom 3D
               birthday cakes to royal Rasmalai fusions and gooey chocolate fudge.
             </motion.p>
 
@@ -126,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({
                     Direct WhatsApp Hotline
                   </p>
                   <a
-                    href={createWhatsAppUrl("Hello Ayesha Bake House! I want to order a freshly baked cake.")}
+                    href={createWhatsAppUrl("Hello Ayesha Baking House! I want to order a freshly baked cake.")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-base font-extrabold text-[#1B4D3E] hover:underline hover:text-[#15803D] flex items-center gap-1.5"

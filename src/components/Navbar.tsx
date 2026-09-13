@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onOpenWelcome}
             className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-bold text-[11px] hover:opacity-90 shadow-xs transition-opacity cursor-pointer"
-            title="Open Welcome to Ayesha Bake House Celebration"
+            title="Open Welcome to Ayesha Baking House Celebration"
           >
             <Sparkles className="w-3 h-3 text-amber-300" />
             <span>Welcome Banner</span>
@@ -104,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         <span className="hidden sm:inline text-rose-200">|</span>
         <a
-          href={createWhatsAppUrl("Hello Ayesha Bake House! I want to order a cake.")}
+          href={createWhatsAppUrl("Hello Ayesha Baking House! I want to order a cake.")}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 hover:text-[#86EFAC] transition-colors font-bold underline decoration-dotted"
@@ -131,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div className="flex flex-col">
                 <span className="text-xl sm:text-2xl font-serif font-black tracking-tight text-[#3E2723] uppercase">
-                  AYESHA BAKE HOUSE
+                  AYESHA BAKING HOUSE
                 </span>
                 <span className="text-xs font-medium text-[#BE185D] tracking-wider uppercase -mt-1 font-script text-base sm:text-lg">
                   Baked with Love, Made for You

@@ -23,6 +23,8 @@ import avatarTwo from '../assets/images/customer_avatar_two_1789206325830.jpg';
 import avatarThree from '../assets/images/customer_avatar_three_1789206337183.jpg';
 import avatarFour from '../assets/images/customer_avatar_four_1789206361958.jpg';
 
+export const BAKERY_NAME = 'AYESHA BAKING HOUSE';
+export const BAKERY_TAGLINE = 'Baked with Love, Made for You';
 export const WHATSAPP_NUMBER = '03442302526';
 export const WHATSAPP_INTL = '923442302526';
 

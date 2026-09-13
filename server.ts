@@ -27,9 +27,9 @@ function getGeminiClient(): GoogleGenAI | null {
   return geminiClient;
 }
 
-// System prompt for Ayesha Bake AI Concierge
+// System prompt for Ayesha Baking House AI Concierge
 const AYESHA_BAKE_SYSTEM_PROMPT = `
-You are the warm, polite, and passionate AI Bakery Concierge for "AYESHA BAKE" (also known as Ayesha Baking House).
+You are the warm, polite, and passionate AI Bakery Concierge for "AYESHA BAKING HOUSE".
 Our Tagline: "Baked with Love, Made for You"
 WhatsApp Contact for Orders & Inquiries: 03442302526 (International format: +923442302526)
 

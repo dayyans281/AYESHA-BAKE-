@@ -296,7 +296,7 @@ export default function App() {
 
         {/* WhatsApp Direct Floating Button with Pulse Effect */}
         <a
-          href={createWhatsAppUrl("Hello Ayesha Bake House! I want to order a cake.")}
+          href={createWhatsAppUrl("Hello Ayesha Baking House! I want to order a cake.")}
           target="_blank"
           rel="noopener noreferrer"
           className="pointer-events-auto group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#15803D] hover:bg-[#166534] text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all"

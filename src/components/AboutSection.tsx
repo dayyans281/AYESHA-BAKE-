@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Sparkles, Heart, CheckCircle2, Phone, UtensilsCrossed } from 'lucide-react';
 import { WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
 import { useCustomPhotos } from '../utils/customPhotoStore';
@@ -41,11 +41,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
             Our Story & Craft
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#3E2723] tracking-tight">
-            Welcome to <span className="text-[#BE185D]">AYESHA BAKE HOUSE</span>
+            Welcome to <span className="text-[#BE185D]">AYESHA BAKING HOUSE</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#5D4037] leading-relaxed">
             <strong className="text-[#3E2723] font-semibold">“Baked with Love, Made for You”</strong> — 
-            AYESHA BAKE HOUSE is a lovingly created HOME bakery where every sweet dream comes to life. 
+            AYESHA BAKING HOUSE is a lovingly created HOME bakery where every sweet dream comes to life. 
             From joyful birthday milestones to grand family celebrations and intimate tea-time cravings, 
             we pour love, precision, and the finest ingredients into every creation.
           </p>
@@ -75,7 +75,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-[#FEF3C7] mb-6">
               <img
                 src={photos.carCake}
-                alt="Handcrafted 3D Car Birthday Cake by Ayesha Bake House"
+                alt="Handcrafted 3D Car Birthday Cake by Ayesha Baking House"
                 className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />
@@ -118,7 +118,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onCustomCakeClick })
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-[#E0F2FE] mb-6">
               <img
                 src={photos.sonicCake}
-                alt="Sonic the Hedgehog & Dinosaurs Custom Birthday Cake by Ayesha Bake House"
+                alt="Sonic the Hedgehog & Dinosaurs Custom Birthday Cake by Ayesha Baking House"
                 className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />

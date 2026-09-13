@@ -21,6 +21,7 @@ import {
 import { triggerConfetti } from '../utils/confetti';
 import { CartItem, OrderDetails } from '../types';
 import { WHATSAPP_NUMBER, createWhatsAppUrl } from '../data/bakeryData';
+import { BakeryDatePicker, formatDisplayDate } from './BakeryDatePicker';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -74,6 +75,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       alert('Please provide your delivery address.');
       return;
     }
+    if (!deliveryDate) {
+      alert('Please specify your preferred delivery or pickup date.');
+      return;
+    }
     setStep('payment');
   };
 
@@ -116,7 +121,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const generateWhatsAppMessage = (order: OrderDetails) => {
     let text = `🍰 *NEW VERIFIED ORDER: ${order.orderId}*\n`;
-    text += `*AYESHA BAKE HOUSE - Baked with Love, Made for You*\n`;
+    text += `*AYESHA BAKING HOUSE - Baked with Love, Made for You*\n`;
     text += `-------------------------------------------\n`;
     text += `👤 *Customer:* ${order.customerName}\n`;
     text += `📞 *WhatsApp:* ${order.customerPhone}\n`;
@@ -124,7 +129,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     if (order.deliveryMethod === 'delivery') {
       text += `📍 *Address:* ${order.deliveryAddress} (${order.deliveryArea})\n`;
     }
-    text += `📅 *Requested Date:* ${order.deliveryDate}\n`;
+    const formattedDate = formatDisplayDate(order.deliveryDate);
+    text += `📅 *Requested Date:* ${formattedDate.main} [${order.deliveryDate}]\n`;
     text += `⏰ *Time Slot:* ${order.deliveryTimeSlot}\n`;
     text += `💳 *Payment Method:* ${
       order.paymentMethod === 'cod'
@@ -459,35 +465,33 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </div>
               )}
 
-              {/* Date & Time Slot */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#4E342E] mb-1">
-                    Delivery Date *
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={deliveryDate}
-                    onChange={(e) => setDeliveryDate(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8D8CF] text-xs sm:text-sm text-[#3E2723] bg-white focus:ring-2 focus:ring-[#BE185D] focus:outline-none"
-                  />
-                </div>
+              {/* Date & Time Slot Section */}
+              <div className="pt-2 border-t border-[#F5E8E0] space-y-3">
+                <BakeryDatePicker
+                  value={deliveryDate}
+                  onChange={setDeliveryDate}
+                  mode={deliveryMethod}
+                  label={deliveryMethod === 'delivery' ? 'Preferred Delivery Date *' : 'Preferred Pickup Date *'}
+                />
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#4E342E] mb-1">
-                    Preferred Time Slot *
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#4E342E] mb-1.5 flex items-center justify-between">
+                    <span>Preferred Time Slot *</span>
+                    <span className="text-[10px] text-[#8D6E63] font-normal lowercase">(fresh oven departure)</span>
                   </label>
-                  <select
-                    value={deliveryTimeSlot}
-                    onChange={(e) => setDeliveryTimeSlot(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8D8CF] text-xs sm:text-sm text-[#3E2723] bg-white focus:ring-2 focus:ring-[#BE185D] focus:outline-none"
-                  >
-                    <option value="Morning (10:00 AM – 1:00 PM)">Morning (10:00 AM – 1:00 PM)</option>
-                    <option value="Afternoon (2:00 PM – 5:00 PM)">Afternoon (2:00 PM – 5:00 PM)</option>
-                    <option value="Evening (6:00 PM – 9:00 PM)">Evening (6:00 PM – 9:00 PM)</option>
-                    <option value="Night Celebrations (9:00 PM – 11:00 PM)">Night (9:00 PM – 11:00 PM)</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={deliveryTimeSlot}
+                      onChange={(e) => setDeliveryTimeSlot(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E8D8CF] text-xs sm:text-sm text-[#3E2723] bg-white focus:ring-2 focus:ring-[#BE185D] focus:outline-none cursor-pointer"
+                    >
+                      <option value="Morning (10:00 AM – 1:00 PM)">🌅 Morning (10:00 AM – 1:00 PM)</option>
+                      <option value="Afternoon (2:00 PM – 5:00 PM)">☀️ Afternoon (2:00 PM – 5:00 PM)</option>
+                      <option value="Evening (6:00 PM – 9:00 PM)">🌙 Evening (6:00 PM – 9:00 PM)</option>
+                      <option value="Night Celebrations (9:00 PM – 11:00 PM)">🎉 Night Celebrations (9:00 PM – 11:00 PM)</option>
+                    </select>
+                    <Clock className="w-4 h-4 text-[#BE185D] absolute left-3 top-3 pointer-events-none" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -496,9 +500,36 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           {/* STEP 3: PAYMENT METHOD */}
           {step === 'payment' && (
             <div className="space-y-4">
-              <h4 className="font-serif font-bold text-base text-[#3E2723] pb-2 border-b border-[#F0DFD5]">
-                Select Payment Method
-              </h4>
+              <div className="flex items-center justify-between pb-2 border-b border-[#F0DFD5]">
+                <h4 className="font-serif font-bold text-base text-[#3E2723]">
+                  Select Payment Method
+                </h4>
+                <span className="text-xs text-[#BE185D] font-bold">Step 3 of 3</span>
+              </div>
+
+              {/* Scheduled Delivery/Pickup Summary Card */}
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-[#FFF8F0] to-[#FDF2F8] border border-[#FBCFE8] flex items-center justify-between gap-3 text-xs">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-[#FCE7F3] text-[#BE185D] flex items-center justify-center shrink-0">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                  <div className="truncate">
+                    <div className="font-bold text-[#3E2723] truncate">
+                      {formatDisplayDate(deliveryDate).main}
+                    </div>
+                    <div className="text-[11px] text-[#8D6E63] truncate">
+                      {deliveryTimeSlot} • {deliveryMethod === 'delivery' ? 'Doorstep Delivery' : 'Bakery Pickup'}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setStep('details')}
+                  className="text-[11px] font-bold text-[#BE185D] hover:underline shrink-0 bg-white px-2.5 py-1 rounded-lg border border-[#FCE7F3] cursor-pointer"
+                >
+                  Change Date
+                </button>
+              </div>
 
               <div className="space-y-2.5">
                 <label
@@ -629,7 +660,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="text-left p-5 rounded-2xl bg-white border border-[#EFE3DB] shadow-2xs space-y-3 text-xs">
                 <div className="flex items-center justify-between pb-2 border-b border-[#F0DFD5]">
                   <div>
-                    <span className="font-bold text-[#3E2723] text-sm block">AYESHA BAKE HOUSE Receipt</span>
+                    <span className="font-bold text-[#3E2723] text-sm block">AYESHA BAKING HOUSE Receipt</span>
                     <span className="text-[10px] text-[#8D6E63]">{confirmedOrder.createdAt}</span>
                   </div>
                   <span className="font-mono font-bold text-xs bg-[#FAF5EE] px-2 py-1 rounded-md border border-[#E8D8CF]">
@@ -638,7 +669,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </div>
 
                 <div className="space-y-1.5 text-[#5D4037]">
-                  <p><strong className="text-[#3E2723]">Delivery Date:</strong> {confirmedOrder.deliveryDate} ({confirmedOrder.deliveryTimeSlot})</p>
+                  <p>
+                    <strong className="text-[#3E2723]">
+                      {confirmedOrder.deliveryMethod === 'delivery' ? 'Delivery Date:' : 'Pickup Date:'}
+                    </strong>{' '}
+                    <span className="font-semibold text-[#BE185D]">{formatDisplayDate(confirmedOrder.deliveryDate).main}</span>{' '}
+                    <span className="text-[#8D6E63]">({confirmedOrder.deliveryTimeSlot})</span>
+                  </p>
                   <p><strong className="text-[#3E2723]">Address:</strong> {confirmedOrder.deliveryAddress}</p>
                   <p><strong className="text-[#3E2723]">Payment:</strong> {confirmedOrder.paymentMethod.toUpperCase()}</p>
                 </div>

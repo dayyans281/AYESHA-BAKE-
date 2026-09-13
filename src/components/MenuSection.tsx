@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Plus, Check, MessageCircle, Star, Sparkles, SlidersHorizontal, Eye, FileText, ArrowRight } from 'lucide-react';
 import { MENU_ITEMS, createWhatsAppUrl } from '../data/bakeryData';
 import { MenuItem } from '../types';

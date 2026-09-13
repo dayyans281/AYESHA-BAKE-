@@ -13,7 +13,7 @@ export const ContactSection: React.FC = () => {
 
   const handleSendQuickWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = `Hello Ayesha Bake House! My name is ${inquiryName || 'Customer'}. ${inquiryMsg || 'I would like to inquire about ordering a custom cake.'}`;
+    const text = `Hello Ayesha Baking House! My name is ${inquiryName || 'Customer'}. ${inquiryMsg || 'I would like to inquire about ordering a custom cake.'}`;
     window.open(createWhatsAppUrl(text), '_blank');
   };
 

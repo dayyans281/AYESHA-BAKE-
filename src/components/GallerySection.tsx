@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, X, MessageCircle, Eye, Tag, Users, Cake, ArrowRight, ShieldCheck, Heart } from 'lucide-react';
 import { GALLERY_ITEMS, createWhatsAppUrl } from '../data/bakeryData';
 import { GalleryItem, GalleryCategory, MenuItem } from '../types';

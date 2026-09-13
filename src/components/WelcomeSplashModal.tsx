@@ -81,7 +81,7 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
                   TO
                 </span>{' '}
                 <span className="bg-gradient-to-r from-[#BE185D] via-[#DB2777] via-[#9333EA] to-[#4F46E5] bg-clip-text text-transparent underline decoration-[#F472B6] decoration-wavy decoration-2">
-                  AYESHA BAKE HOUSE
+                  AYESHA BAKING HOUSE
                 </span>
               </h1>
             </div>
@@ -175,7 +175,7 @@ export const WelcomeSplashModal: React.FC<WelcomeSplashModalProps> = ({
                 className="w-full sm:w-auto flex-1 py-4 px-6 rounded-2xl font-bold text-sm sm:text-base text-white bg-gradient-to-r from-[#BE185D] via-[#D946EF] to-[#8B5CF6] hover:from-[#9D174D] hover:to-[#7C3AED] shadow-lg hover:shadow-xl hover:scale-102 transition-all flex items-center justify-center gap-2.5"
               >
                 <Music className="w-5 h-5 fill-white" />
-                <span>Enter Ayesha Bake House & Play Music</span>
+                <span>Enter Ayesha Baking House & Play Music</span>
                 <Sparkles className="w-4 h-4 text-amber-200" />
               </button>
 

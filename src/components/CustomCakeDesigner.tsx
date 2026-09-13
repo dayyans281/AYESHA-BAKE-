@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { triggerConfetti } from '../utils/confetti';
 import { Sparkles, Heart, MessageCircle, Calendar, Edit3, ShieldCheck, Check, Plus } from 'lucide-react';
 import { WHATSAPP_NUMBER, createWhatsAppUrl, MENU_ITEMS } from '../data/bakeryData';
 import { MenuItem, ProductCustomization } from '../types';
 import { ScrollReveal } from './ScrollReveal';
+import { BakeryDatePicker, formatDisplayDate, getOffsetDateISO } from './BakeryDatePicker';
 
 interface CustomCakeDesignerProps {
   onAddCustomDesignToCart?: (item: MenuItem, customization: ProductCustomization) => void;
@@ -16,7 +17,7 @@ export const CustomCakeDesigner: React.FC<CustomCakeDesignerProps> = ({ onAddCus
   const [designTheme, setDesignTheme] = useState('3D Sculpted Car / Vehicle Theme');
   const [inscription, setInscription] = useState('Happy Birthday!');
   const [customerName, setCustomerName] = useState('');
-  const [deliveryDate, setDeliveryDate] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState(() => getOffsetDateISO(1));
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [isCopied, setIsCopied] = useState(false);
   const [addedToCartNotice, setAddedToCartNotice] = useState(false);
@@ -47,14 +48,14 @@ export const CustomCakeDesigner: React.FC<CustomCakeDesignerProps> = ({ onAddCus
 
   const estimatedTotal = currentFlavorObj.baseRate * weight + currentThemeObj.fee;
 
-  const generatedWhatsAppText = `*CUSTOM CAKE ORDER - AYESHA BAKE HOUSE*
+  const generatedWhatsAppText = `*CUSTOM CAKE ORDER - AYESHA BAKING HOUSE*
 -----------------------------
 *Customer Name:* ${customerName || 'Valued Customer'}
 *Flavor:* ${flavor}
 *Size / Weight:* ${weight} lbs
 *Design Theme:* ${designTheme}
 *Cake Inscription:* "${inscription}"
-*Required Delivery Date:* ${deliveryDate || 'To be discussed'}
+*Required Delivery Date:* ${deliveryDate ? `${formatDisplayDate(deliveryDate).main} [${deliveryDate}]` : 'To be discussed'}
 *Special Notes:* ${specialInstructions || 'None'}
 *Estimated Total:* Rs. ${estimatedTotal}
 -----------------------------
@@ -241,17 +242,12 @@ Hello Chef Ayesha! I would like to confirm this custom cake order. Please let me
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#6E4F42] mb-1.5">
-                  5. Delivery Date & Time
-                </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    value={deliveryDate}
-                    onChange={(e) => setDeliveryDate(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#EAD8CE] focus:outline-none focus:ring-2 focus:ring-[#BE185D] text-xs sm:text-sm text-[#3E2723]"
-                  />
-                </div>
+                <BakeryDatePicker
+                  value={deliveryDate}
+                  onChange={setDeliveryDate}
+                  label="5. Required Celebration Date *"
+                  mode="delivery"
+                />
               </div>
             </div>
 
@@ -284,7 +280,7 @@ Hello Chef Ayesha! I would like to confirm this custom cake order. Please let me
               </div>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* Live Order Ticket Column */}
           <motion.div
