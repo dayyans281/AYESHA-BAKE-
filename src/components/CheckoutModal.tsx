@@ -17,6 +17,7 @@ import {
   Copy,
   ArrowRight,
   ArrowLeft,
+  AlertCircle,
 } from 'lucide-react';
 import { triggerConfetti } from '../utils/confetti';
 import { CartItem, OrderDetails } from '../types';
@@ -54,6 +55,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [confirmedOrder, setConfirmedOrder] = useState<OrderDetails | null>(null);
   const [copiedInvoice, setCopiedInvoice] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<{
+    name?: string;
+    phone?: string;
+    address?: string;
+    date?: string;
+    general?: string;
+  }>({});
 
   if (!isOpen) return null;
 
@@ -63,23 +71,44 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const handleProceedToDetails = () => {
     if (cartItems.length === 0) return;
+    setValidationErrors({});
     setStep('details');
   };
 
   const handleProceedToPayment = () => {
-    if (!customerName.trim() || !customerPhone.trim()) {
-      alert('Please provide your name and WhatsApp contact number.');
-      return;
+    const errors: { name?: string; phone?: string; address?: string; date?: string; general?: string } = {};
+
+    if (!customerName.trim()) {
+      errors.name = 'Please provide your full name.';
+    }
+    if (!customerPhone.trim()) {
+      errors.phone = 'Please provide your WhatsApp contact number.';
     }
     if (deliveryMethod === 'delivery' && !deliveryAddress.trim()) {
-      alert('Please provide your delivery address.');
-      return;
+      errors.address = 'Please provide your complete delivery address.';
     }
     if (!deliveryDate) {
-      alert('Please specify your preferred delivery or pickup date.');
+      errors.date = 'Please specify your preferred delivery or pickup date.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      errors.general = 'Please fill in the required fields marked below to continue to payment.';
+      setValidationErrors(errors);
       return;
     }
+
+    setValidationErrors({});
     setStep('payment');
+  };
+
+  const handleAutofillSample = () => {
+    setCustomerName('Fatima Khan');
+    setCustomerPhone('0344 2302526');
+    if (deliveryMethod === 'delivery' && !deliveryAddress) {
+      setDeliveryAddress('House 14-B, Street 3, Sector G-9/2');
+      setDeliveryArea('Islamabad');
+    }
+    setValidationErrors({});
   };
 
   const handlePlaceOrder = () => {
@@ -182,12 +211,26 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     return text;
   };
 
-  const handleCopyReceipt = () => {
+  const handleCopyReceipt = async () => {
     if (!confirmedOrder) return;
     const text = generateWhatsAppMessage(confirmedOrder);
-    navigator.clipboard.writeText(text);
-    setCopiedInvoice(true);
-    setTimeout(() => setCopiedInvoice(false), 2000);
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setCopiedInvoice(true);
+      setTimeout(() => setCopiedInvoice(false), 2000);
+    } catch {
+      setCopiedInvoice(true);
+      setTimeout(() => setCopiedInvoice(false), 2000);
+    }
   };
 
   return (
@@ -206,7 +249,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif font-bold text-base sm:text-lg text-white">
-                AYESHA BAKE HOUSE Secure Checkout
+                AYESHA BAKING HOUSE Secure Checkout
               </h3>
               <p className="text-[11px] text-rose-200">
                 Direct kitchen order verification & door-to-door delivery
@@ -358,9 +401,30 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           {/* STEP 2: DELIVERY DETAILS */}
           {step === 'details' && (
             <div className="space-y-4">
-              <h4 className="font-serif font-bold text-base text-[#3E2723] pb-2 border-b border-[#F0DFD5]">
-                Recipient & Delivery Information
-              </h4>
+              <div className="flex items-center justify-between pb-2 border-b border-[#F0DFD5]">
+                <h4 className="font-serif font-bold text-base text-[#3E2723]">
+                  Recipient & Delivery Information
+                </h4>
+                <button
+                  type="button"
+                  onClick={handleAutofillSample}
+                  className="text-[11px] font-bold text-[#BE185D] hover:text-[#9D174D] bg-[#FFF1F2] hover:bg-[#FCE7F3] border border-[#FBCFE8] px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
+                  title="Quickly fill in sample contact information"
+                >
+                  ⚡ Autofill Demo Details
+                </button>
+              </div>
+
+              {/* Validation Warning Alert Banner */}
+              {validationErrors.general && (
+                <div className="p-3 rounded-2xl bg-[#FFF1F2] border border-[#FDA4AF] text-[#9F1239] text-xs flex items-start gap-2.5 animate-in fade-in slide-in-from-top-1 duration-200">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-[#E11D48]" />
+                  <div className="flex-1">
+                    <p className="font-bold">Required Information Missing</p>
+                    <p className="text-[11px] text-[#BE123C] mt-0.5">{validationErrors.general}</p>
+                  </div>
+                </div>
+              )}
 
               {/* Customer Contact */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -372,10 +436,25 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     type="text"
                     required
                     value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
+                    onChange={(e) => {
+                      setCustomerName(e.target.value);
+                      if (validationErrors.name || validationErrors.general) {
+                        setValidationErrors((prev) => ({ ...prev, name: undefined, general: undefined }));
+                      }
+                    }}
                     placeholder="e.g. Fatima Khan"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8D8CF] text-xs sm:text-sm text-[#3E2723] bg-white focus:ring-2 focus:ring-[#BE185D] focus:outline-none"
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm text-[#3E2723] focus:outline-none transition-all ${
+                      validationErrors.name
+                        ? 'border-rose-500 bg-rose-50/20 ring-2 ring-rose-200'
+                        : 'border-[#E8D8CF] bg-white focus:ring-2 focus:ring-[#BE185D]'
+                    }`}
                   />
+                  {validationErrors.name && (
+                    <p className="text-[11px] font-semibold text-rose-600 mt-1 flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {validationErrors.name}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -386,10 +465,25 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     type="tel"
                     required
                     value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    placeholder="e.g. 0300 1234567"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8D8CF] text-xs sm:text-sm text-[#3E2723] bg-white focus:ring-2 focus:ring-[#BE185D] focus:outline-none font-mono"
+                    onChange={(e) => {
+                      setCustomerPhone(e.target.value);
+                      if (validationErrors.phone || validationErrors.general) {
+                        setValidationErrors((prev) => ({ ...prev, phone: undefined, general: undefined }));
+                      }
+                    }}
+                    placeholder="e.g. 0344 2302526"
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm text-[#3E2723] font-mono focus:outline-none transition-all ${
+                      validationErrors.phone
+                        ? 'border-rose-500 bg-rose-50/20 ring-2 ring-rose-200'
+                        : 'border-[#E8D8CF] bg-white focus:ring-2 focus:ring-[#BE185D]'
+                    }`}
                   />
+                  {validationErrors.phone && (
+                    <p className="text-[11px] font-semibold text-rose-600 mt-1 flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {validationErrors.phone}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -401,7 +495,12 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={() => setDeliveryMethod('delivery')}
+                    onClick={() => {
+                      setDeliveryMethod('delivery');
+                      if (validationErrors.address) {
+                        setValidationErrors((prev) => ({ ...prev, address: undefined }));
+                      }
+                    }}
                     className={`p-3.5 rounded-2xl border text-left flex items-start gap-2.5 transition-all ${
                       deliveryMethod === 'delivery'
                         ? 'bg-[#FCE7F3] border-[#DB2777] text-[#9D174D]'
@@ -417,7 +516,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
                   <button
                     type="button"
-                    onClick={() => setDeliveryMethod('pickup')}
+                    onClick={() => {
+                      setDeliveryMethod('pickup');
+                      setValidationErrors((prev) => ({ ...prev, address: undefined }));
+                    }}
                     className={`p-3.5 rounded-2xl border text-left flex items-start gap-2.5 transition-all ${
                       deliveryMethod === 'pickup'
                         ? 'bg-[#FCE7F3] border-[#DB2777] text-[#9D174D]'
@@ -444,10 +546,25 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       type="text"
                       required
                       value={deliveryAddress}
-                      onChange={(e) => setDeliveryAddress(e.target.value)}
+                      onChange={(e) => {
+                        setDeliveryAddress(e.target.value);
+                        if (validationErrors.address || validationErrors.general) {
+                          setValidationErrors((prev) => ({ ...prev, address: undefined, general: undefined }));
+                        }
+                      }}
                       placeholder="e.g. House 42-B, Street 5, Phase 4, Near Commercial Market"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8D8CF] text-xs sm:text-sm text-[#3E2723] bg-white focus:ring-2 focus:ring-[#BE185D] focus:outline-none"
+                      className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm text-[#3E2723] focus:outline-none transition-all ${
+                        validationErrors.address
+                          ? 'border-rose-500 bg-rose-50/20 ring-2 ring-rose-200'
+                          : 'border-[#E8D8CF] bg-white focus:ring-2 focus:ring-[#BE185D]'
+                      }`}
                     />
+                    {validationErrors.address && (
+                      <p className="text-[11px] font-semibold text-rose-600 mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
+                        {validationErrors.address}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -469,10 +586,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="pt-2 border-t border-[#F5E8E0] space-y-3">
                 <BakeryDatePicker
                   value={deliveryDate}
-                  onChange={setDeliveryDate}
+                  onChange={(d) => {
+                    setDeliveryDate(d);
+                    if (validationErrors.date || validationErrors.general) {
+                      setValidationErrors((prev) => ({ ...prev, date: undefined, general: undefined }));
+                    }
+                  }}
                   mode={deliveryMethod}
                   label={deliveryMethod === 'delivery' ? 'Preferred Delivery Date *' : 'Preferred Pickup Date *'}
                 />
+                {validationErrors.date && (
+                  <p className="text-[11px] font-semibold text-rose-600 mt-0.5 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    {validationErrors.date}
+                  </p>
+                )}
 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-[#4E342E] mb-1.5 flex items-center justify-between">
